@@ -24,7 +24,7 @@
 
 ![image](007.png)
  
-## 3. (Key point) Rewrite content to the zero-KB webshell
+## 3. (Key point) Rewrite the zero-KB webshell
 
 ### Place the HTTP data packet from the recent "Submit" click into Burp's Repeater, preparing to make modifications before resending it once again.
 
