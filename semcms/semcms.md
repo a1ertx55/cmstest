@@ -1,42 +1,45 @@
 # Semcms latest version(v3.9) allow Arbitrary file upload when it runs on a windows server whose hard drive patition is NTFS.
-## 1st, Need Administrator's authority. Login as administrator First
+## 1. We should log in to the Web Administrator Console.
 ![image](001.png)
-## 2nd,upload a jpg webshell(just zero KB)
-Choose a jpg webshell, whose content is "<?php phpinfo();?>"
+## 2. Attempt to upload a webshell in PHP format.
+
+###Choose a jpg webshell, whose content is "<?php phpinfo();?>"
 
 ![image](002.png)
 ![image](003.png)
 
-Then click "Submit" in the page, see the HTTP request in Burpsuite.
+### Afterward, click the "Submit" button, and then interupt and observe the HTTP request in Burp Suite.
 
 ![image](004.png)
 
-Change the “wname” param to “111.jpg.php:”, as the follow picture shows.
+### Manually change the “wname” param to “111.jpg.php:” in Burp Suite(see picture below).
 
 ![image](005.png)
 
-And the response will tell you the path & filename(../Images/projoucts/111.jpg.php:.jpg) you just uploaded.
+## And the response will show the path & filename(../Images/projoucts/111.jpg.php:.jpg) you just uploaded.
 
 ![image](006.png)
 
-But, because of NTFS features, in fact, the system will create a file named **111.jpg.php** of 0KB rather than "111.jpg.php:.jpg".
+## However, due to the characteristics of NTFS, the actual file will appear as a 0kb-sized "111.jpg.php," rather than the "111.jpg.php:.jpg" shown in response.
 
 ![image](007.png)
  
-## 3rd,Rewrite content to the zero-KB webshell
-Send the upload HTTP request(we just mentioned above) to Burpsuite repeater.
-Change it as follow.
+## 3. (Key point) Rewrite content to the zero-KB webshell
+
+### Place the HTTP data packet from the recent "Submit" click into Burp's Repeater, preparing to make modifications before resending it once again.
+
+### Manually modify it as follow.
 
 ![image](008.png)
 
-And click “Forward” in Burpsuite, the response says we have created file 111.jpg<<<<
+### And then click “Forward” in Burpsuite, the response shows we have created file 111.jpg<<<< successfully.
 
 ![image](009.png)
 
-BUT, the truth is, from explorer's view, it is the 111.jpg.php has been rewrited! That's because the features of Windows.
+### However, upon checking from the file explorer, there is no file named "111.jpg<<<<". Instead, the previously created "111.jpg.php" file has been overwritten and now contains new content.
 
 ![image](010.png)
 
-Visit http://localhost/Images/prdoucts/111.jpg.php, and the php code executed.
+### By accessing the webshell file from the URL http://localhost/Images/prdoucts/111.jpg.php, the malicious code is executed.
 
 ![image](011.png)
