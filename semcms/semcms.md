@@ -3,7 +3,7 @@
 ![image](001.png)
 ## 2. Attempt to upload a webshell in PHP format.
 
-###Choose a jpg webshell, whose content is "<?php phpinfo();?>"
+###Choose a jpg webshell, whose content is "&lt?php phpinfo();?&gt"
 
 ![image](002.png)
 ![image](003.png)
